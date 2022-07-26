@@ -1,4 +1,4 @@
-package com.example;
+package es.casaroja.fito;
 
 import org.junit.jupiter.api.Test;
 import software.amazon.awscdk.App;

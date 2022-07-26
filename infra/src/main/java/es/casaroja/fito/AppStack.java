@@ -1,4 +1,4 @@
-package com.example;
+package es.casaroja.fito;
 
 import io.micronaut.aws.cdk.function.MicronautFunction;
 import io.micronaut.aws.cdk.function.MicronautFunctionFile;

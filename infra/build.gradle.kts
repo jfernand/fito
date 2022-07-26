@@ -1,6 +1,6 @@
 plugins {
-    id("application") 
-    id("java") 
+    id("application")
+    id("java")
 }
 
 repositories {
@@ -22,4 +22,3 @@ application {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-

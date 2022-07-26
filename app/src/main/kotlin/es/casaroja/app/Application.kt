@@ -1,4 +1,4 @@
-package es.casaroja.fito
+package es.casaroja.app
 
 import io.ktor.server.netty.NettyApplicationEngine
 import io.micronaut.ktor.KtorApplication

@@ -9,7 +9,7 @@ plugins {
 version = "0.1"
 group = "com.example"
 
-val kotlinVersion=project.properties.get("kotlinVersion")
+val kotlinVersion = project.properties.get("kotlinVersion")
 repositories {
     mavenCentral()
 }
@@ -67,11 +67,11 @@ tasks {
         }
     }
     dockerBuild {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+//        images.set(listOf("${System.env("DOCKER_IMAGE") ?: project.name}:$project.version"))
     }
 
     dockerBuildNative {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+//        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     }
 }
 graalvmNative.toolchainDetection.set(false)
@@ -92,6 +92,3 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         "-Dio.netty.noPreferDirect=true"
     )
 }
-
-
-

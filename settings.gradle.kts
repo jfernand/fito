@@ -1,5 +1,4 @@
-
-rootProject.name="fito"
+rootProject.name = "fito"
 
 include("app")
 include("infra")

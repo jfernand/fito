@@ -1,4 +1,4 @@
-package com.example
+package es.casaroja.fito
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput
 import com.amazon.ask.model.Intent
@@ -6,6 +6,7 @@ import com.amazon.ask.model.IntentRequest
 import com.amazon.ask.model.RequestEnvelope
 import com.amazon.ask.model.ui.SimpleCard
 import com.amazon.ask.model.ui.SsmlOutputSpeech
+import es.casaroja.ask.HelpIntentHandler
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

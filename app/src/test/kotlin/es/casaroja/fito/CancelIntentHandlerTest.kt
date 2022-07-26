@@ -1,4 +1,4 @@
-package com.example
+package es.casaroja.fito
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput
 import com.amazon.ask.model.Intent

@@ -1,4 +1,4 @@
-package es.casaroja.fito
+package es.casaroja.app
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.install

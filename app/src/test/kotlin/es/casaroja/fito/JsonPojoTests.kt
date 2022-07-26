@@ -1,6 +1,5 @@
-package com.example
+package es.casaroja.fito
 
-import FitoProduct
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.junit.jupiter.api.Test
@@ -10,6 +9,6 @@ class JsonPojoTests {
     @Test
     fun readPojo() {
         val mapper = jacksonObjectMapper()
-        mapper.readValue<List<FitoProduct>>(File("src/main/resources/Productos-19_07_2022.json"))
+        mapper.readValue<List<Product>>(File("src/main/resources/Productos-19_07_2022.json"))
     }
 }

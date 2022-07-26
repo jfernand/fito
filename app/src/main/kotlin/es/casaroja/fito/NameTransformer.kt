@@ -1,4 +1,4 @@
-package com.example
+package es.casaroja.fito
 
 import javax.validation.constraints.NotBlank
 

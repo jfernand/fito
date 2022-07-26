@@ -1,99 +1,140 @@
 package es.casaroja.fito
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.microstream.RootProvider
+import io.micronaut.microstream.annotations.StoreParams
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
+import java.util.concurrent.*
+import javax.validation.Valid
 
-data class FitoProduct(
+data class Product(
     @JsonProperty("IdProducto")
-    var productId:Int,
+    var productId: Int,
     @JsonProperty("CodInternoFabricante")
-    var internalManufacturerCode:String?,
+    var internalManufacturerCode: String?,
     @JsonProperty("NumRegistro")
-    var registryNumber:String,
+    var registryNumber: String,
     @JsonProperty("Nombre")
-    var name:String,
+    var name: String,
     @JsonProperty("Titular")
-    var registrant:String,
+    var registrant: String,
     @JsonProperty("Fabricante")
-    var manufacturer:String,
+    var manufacturer: String,
     @JsonProperty("Fabrica")
-    var plant:Int?,
+    var plant: Int?,
     @JsonProperty("Formulado")
-    var formulation:String,
+    var formulation: String,
     @JsonProperty("Estado")
-    var legalStatus:String,
+    var legalStatus: String,
     @JsonProperty("Observaciones")
-    var notes:String?,
+    var notes: String?,
     @JsonProperty("Tramite")
-    var tramite:String?,
+    var tramite: String?,
     @JsonProperty("EstadoTramite")
-    var estadotramite:String?,
+    var estadotramite: String?,
     @JsonProperty("Condicionamiento")
-    var conditioning:String?,
+    var conditioning: String?,
     @JsonProperty("Simbolo_1")
-    var symbol1:String?,
+    var symbol1: String?,
     @JsonProperty("Simbolo_2")
-    var symbol2:String?,
+    var symbol2: String?,
     @JsonProperty("Simbolo_3")
-    var symbol3:String?,
+    var symbol3: String?,
     @JsonProperty("Domestico")
-    var domestic:String?,
+    var domestic: String?,
     @JsonProperty("Seg_Almacenamiento")
-    var storageSafety:String?,
+    var storageSafety: String?,
     @JsonProperty("Seg_Manipulacion")
-    var handlingSafety:String?,
+    var handlingSafety: String?,
     @JsonProperty("Version")
-    var version:String?,
+    var version: String?,
     @JsonProperty("VersionDePartida")
-    var origVersion:String?,
+    var origVersion: String?,
     @JsonProperty("Seg_Des_Vertido")
-    var disposalSafety:String?,
+    var disposalSafety: String?,
     @JsonProperty("NRegDirectiva")
-    var nregDirectiva:String?,
+    var nregDirectiva: String?,
     @JsonProperty("EstadoVersion")
-    var versionState:String?,
+    var versionState: String?,
     @JsonProperty("IdEstado")
-    var stateId:String?,
+    var stateId: String?,
     @JsonProperty("IdSustancia")
-    var substanceId:String?,
+    var substanceId: String?,
     @JsonProperty("IdAmbito")
-    var envId:String?,
+    var envId: String?,
     @JsonProperty("IdCultivo")
-    var cropId:String?,
+    var cropId: String?,
     @JsonProperty("IdPlaga")
-    var plagueId:String?,
+    var plagueId: String?,
     @JsonProperty("IdFuncion")
-    var functionId:String?,
+    var functionId: String?,
     @JsonProperty("IdTitular")
-    var titularId:String?,
+    var titularId: String?,
     @JsonProperty("IdFormulado")
-    var formulationId:Int?,
+    var formulationId: Int?,
     @JsonProperty("FechaTramite")
-    var requestDate:String?,
+    var requestDate: String?,
     @JsonProperty("StrFechaTramite")
-    var strRequestDate:String?,
+    var strRequestDate: String?,
     @JsonProperty("FechaCaducidad")
-    var expiryDate:String?,
+    var expiryDate: String?,
     @JsonProperty("StrFechaCaducidad")
-    var strExpiryDate:String?,
+    var strExpiryDate: String?,
     @JsonProperty("FechaInscripcion")
-    var registryDate:String?,
+    var registryDate: String?,
     @JsonProperty("StrFechaInscripcion")
-    var strRegistryDate:String?,
+    var strRegistryDate: String?,
     @JsonProperty("FechaRenovacion")
-    var renewalDate:String?,
+    var renewalDate: String?,
     @JsonProperty("StrFechaRenovacion")
-    var strRenewalDate:String?,
+    var strRenewalDate: String?,
     @JsonProperty("FechaModificacion")
-    var updateDate:String?,
+    var updateDate: String?,
     @JsonProperty("StrFechaModificacion")
-    var strUpdateDate:String?,
+    var strUpdateDate: String?,
     @JsonProperty("FechaLimiteVenta")
-    var saleLimitDate:String?,
+    var saleLimitDate: String?,
     @JsonProperty("StrFechaLimiteVenta")
-    var strSDaleLimitDate:String?,
+    var strSDaleLimitDate: String?,
     @JsonProperty("FechaAutorizacion")
-    var authorizationDate:String?,
+    var authorizationDate: String?,
     @JsonProperty("StrFechaAutorizacion")
-    var strAuthorizationDate:String?,
+    var strAuthorizationDate: String?,
 ) {
+}
+
+@Introspected
+class ProductContainer {
+    val products: MutableMap<Int, Product> = ConcurrentHashMap()
+}
+
+interface ProductRepository {
+    fun list(): Collection<Product>
+    fun create(@Valid product: Product): Product
+    fun find(productId: Int): Product?
+}
+
+@Singleton
+open class ProductContainerRepo : ProductRepository {
+    @Inject
+    private lateinit var rootProvider: RootProvider<ProductContainer>
+
+    override fun list() = rootProvider.root().products.values
+
+    override fun create(product: Product): Product {
+        return performCreate(rootProvider.root().products, product)
+    }
+
+    @StoreParams("products")
+    protected open fun performCreate(
+        products: MutableMap<Int, Product>,
+        product: Product,
+    ): Product {
+        products[product.productId] = product
+        return product
+    }
+
+    override fun find(productId: Int):Product? = rootProvider.root().products[productId]
 }
