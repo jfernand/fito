@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.example
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [amazon-api-gateway, annotation-api, app-name, aws-alexa, aws-cdk, aws-lambda, aws-v2-sdk, config4k, github-workflow-docker-registry, github-workflow-graal-docker-registry, graalvm, gradle, hamcrest, jackson-databind, junit, kotlin, kotlin-build, kotlin-extension-functions, ktor, micronaut-build, microstream, microstream-cache, microstream-rest, problem-json, readme, shade, slf4j-simple, testcontainers]
